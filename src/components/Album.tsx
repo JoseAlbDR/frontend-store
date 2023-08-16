@@ -1,9 +1,9 @@
-import * as React from "react";
+// import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+// import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,7 +14,63 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import SearchIcon from "@mui/icons-material/Search";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useProducts } from "../hooks/useProducts";
+import { alpha, CircularProgress, styled } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+// import { ICompany } from "../types/interfaces";
+
+const Search = styled("form")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(TextField)(({ theme }) => ({
+  color: "#fff",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+  "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
+    color: "#fff",
+  },
+}));
 
 function Copyright() {
   return (
@@ -29,21 +85,64 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Album() {
+  const { isLoading, products } = useProducts();
+  const [featured, setFeatured] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("ikea");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [company, setCompany] = useState("");
+  if (isLoading) return <CircularProgress />;
+
+  if (!products) return;
+
+  const handleFeatured = () => {
+    setFeatured((featured) => !featured);
+    searchParams.set("featured", String(featured));
+    setSearchParams(searchParams);
+  };
+
+  const handleAll = () => {
+    const queryParams = "";
+    setSearchParams(queryParams);
+  };
+
+  const handleSearch = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    searchParams.set("name", searchQuery);
+    setSearchParams(searchParams);
+    setSearchQuery("");
+  };
+
+  const handleCompanyChange = (e: { target: { value: string } }) => {
+    setCompany(e.target.value);
+    searchParams.set("company", e.target.value);
+    setSearchParams(searchParams);
+  };
+  // console.log(products);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Store
           </Typography>
+          <Search onSubmit={handleSearch}>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </Search>
         </Toolbar>
       </AppBar>
       <main>
@@ -63,7 +162,7 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              Album layout
+              Store Api Demo
             </Typography>
             <Typography
               variant="h5"
@@ -71,31 +170,57 @@ export default function Album() {
               color="text.secondary"
               paragraph
             >
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks don&apos;t simply skip over it entirely.
+              Front End for Store Api
             </Typography>
             <Stack
               sx={{ pt: 4 }}
               direction="row"
               spacing={2}
               justifyContent="center"
+            ></Stack>
+            <Button onClick={handleAll}>All</Button>
+            <Button onClick={handleFeatured}>Featured</Button>
+            <FormControl sx={{ width: "200px" }}>
+              <InputLabel id="demo-simple-select-label">Company</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={company}
+                label="Company"
+                onChange={handleCompanyChange}
+              >
+                <MenuItem value={"ikea"}>Ikea</MenuItem>
+                <MenuItem value={"marcos"}>Marcos</MenuItem>
+                <MenuItem value={"liddy"}>Liddy</MenuItem>
+                <MenuItem value={"caressa"}>Caressa</MenuItem>
+              </Select>
+            </FormControl>
+            {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+            {/* <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={company}
+              label={company}
+              onChange={(e) => setCompany(e.target.value)}
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
+              <MenuItem value={"ikea"}>Ikea</MenuItem>
+              <MenuItem value={"marcos"}>Marcos</MenuItem>
+              <MenuItem value={"liddy"}>Liddy</MenuItem>
+              <MenuItem value={"caress"}>Caressa</MenuItem>
+            </Select> */}
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {products.map((product) => (
+              <Grid item key={product._id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
+                    gap: "10px",
                   }}
                 >
                   <CardMedia
@@ -104,21 +229,42 @@ export default function Album() {
                       // 16:9
                       pt: "56.25%",
                     }}
-                    image="https://source.unsplash.com/random?wallpapers"
+                    image={`https://source.unsplash.com/random?${product.name
+                      .split(" ")
+                      .at(-1)}`}
                   />
-                  <CardContent sx={{ flexGrow: 1 }}>
+                  <CardContent
+                    sx={{
+                      flexGrow: 1,
+                      display: "flex",
+                      gap: "15px",
+                      flexDirection: "column",
+                    }}
+                  >
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {product.name}
                     </Typography>
+                    <Typography gutterBottom variant="h6" component="h3">
+                      Company: {product.company}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography>Price: {product.price}</Typography>
+                      <Typography>Rating: {product.rating}</Typography>
+                    </Box>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      Featured: {product.featured ? "Yes" : "No"}
                     </Typography>
+                    <Typography>ID: {product._id}</Typography>
                   </CardContent>
-                  <CardActions>
+                  {/* <CardActions>
                     <Button size="small">View</Button>
                     <Button size="small">Edit</Button>
-                  </CardActions>
+                  </CardActions> */}
                 </Card>
               </Grid>
             ))}
