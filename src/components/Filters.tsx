@@ -1,15 +1,11 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import { useStore } from "../context/storeContext";
 import { useNavigate } from "react-router-dom";
 import { useFilter } from "../hooks/useFilter";
-import _ from "lodash";
 import { useCompanies } from "../hooks/useCompanies";
 import { CircularProgress } from "@mui/material";
+import SelectList from "./SelectList";
 
 export default function Filters() {
   const navigate = useNavigate();
@@ -21,6 +17,9 @@ export default function Filters() {
     featured,
     company,
     setCompany,
+    sortBy,
+    setSortBy,
+    reset,
   } = useStore();
 
   const { companies, isLoading } = useCompanies();
@@ -34,37 +33,51 @@ export default function Filters() {
     setUrlFilter(setCompany, value, "company");
   };
 
+  const handleSortByChange = (value: string) => {
+    setUrlFilter(setSortBy, value, "sortBy");
+  };
+
   const handleAll = () => {
     setSearch(false);
     setUrlParams({});
     navigate("/");
   };
+
+  const sortByList: string[] = [
+    "Date Asc",
+    "Date Desc",
+    "Name Asc",
+    "Name Desc",
+    "Price Asc",
+    "Price Desc",
+    "Rating Asc",
+    "Rating Desc",
+  ];
   return (
     <Box
       sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       <>
+        <Button onClick={reset}>Reset</Button>
         <Button onClick={handleAll}>All</Button>
         <Button onClick={handleFeatured}>Featured</Button>
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <FormControl sx={{ width: "200px" }}>
-            <InputLabel id="demo-simple-select-label">Company</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+          <>
+            <SelectList
+              data={companies}
               value={company}
-              label="Company"
-              onChange={(e) => handleCompanyChange(e.target.value)}
-            >
-              {companies.map((company, index) => (
-                <MenuItem key={index} value={company}>
-                  {_.capitalize(company)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              onChange={handleCompanyChange}
+              label={"Company"}
+            />
+            <SelectList
+              data={sortByList}
+              value={sortBy}
+              onChange={handleSortByChange}
+              label={"Sort By"}
+            />
+          </>
         )}
       </>
     </Box>
