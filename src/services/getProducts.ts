@@ -1,10 +1,10 @@
 import axios from "axios";
-import { IProduct, Query } from "../types/interfaces";
+import { ProductResponse, Query } from "../types/interfaces";
 import _ from "lodash";
 
 export const getProduts = async (
   params: Query
-): Promise<IProduct[] | undefined> => {
+): Promise<ProductResponse | undefined> => {
   const query: string[] = [];
 
   if (params.featured) {
@@ -29,8 +29,7 @@ export const getProduts = async (
     );
 
     if (!products) throw new Error("Error getting products");
-
-    return products.data.products;
+    return products.data;
   } catch (error) {
     console.log(error);
   }
