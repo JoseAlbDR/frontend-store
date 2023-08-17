@@ -10,7 +10,7 @@ import { useFilter } from "../hooks/useFilter";
 
 export default function Filters() {
   const navigate = useNavigate();
-  const setUrlFilter = useFilter();
+  const { setUrlFilter } = useFilter();
   const {
     setFeatured,
     setSearch,
