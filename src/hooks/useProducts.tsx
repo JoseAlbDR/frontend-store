@@ -8,6 +8,7 @@ export const useProducts = () => {
   const featured = searchParams.get("featured");
   const name = searchParams.get("name");
   const company = searchParams.get("company");
+  const sortBy = searchParams.get("sortBy");
   const query: Query = {};
 
   if (featured) {
@@ -22,8 +23,12 @@ export const useProducts = () => {
     query.company = company;
   }
 
+  if (sortBy) {
+    query.sortBy = sortBy;
+  }
+
   const { isLoading, data, isError } = useQuery({
-    queryKey: ["products", featured, name, company],
+    queryKey: ["products", featured, name, company, sortBy],
     queryFn: () => getProduts(query),
   });
 
