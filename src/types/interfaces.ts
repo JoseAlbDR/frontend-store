@@ -36,3 +36,8 @@ export interface IStoreContext {
 export interface IProductProps {
   product: IProduct;
 }
+
+export interface ProductResponse {
+  nbHits: number;
+  products: IProduct[];
+}
