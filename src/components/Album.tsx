@@ -1,26 +1,20 @@
 // import * as React from "react";
-import AppBar from "@mui/material/AppBar";
+
 import Button from "@mui/material/Button";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
 // import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
-import SearchIcon from "@mui/icons-material/Search";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useProducts } from "../hooks/useProducts";
-import { Alert, alpha, CircularProgress, styled } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -28,51 +22,6 @@ import FormControl from "@mui/material/FormControl";
 import _ from "lodash";
 import { useStore } from "../context/storeContext";
 // import { ICompany, Query } from '../types/interfaces';
-
-const Search = styled("form")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(TextField)(({ theme }) => ({
-  color: "#fff",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-  "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
-    color: "#fff",
-  },
-}));
 
 function Copyright() {
   return (
@@ -87,9 +36,6 @@ function Copyright() {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export default function Album() {
   const navigate = useNavigate();
 
@@ -102,8 +48,6 @@ export default function Album() {
     setSearch,
     featured,
     setFeatured,
-    name,
-    setName,
     company,
     setCompany,
   } = useStore();
@@ -141,16 +85,6 @@ export default function Album() {
     navigate("/");
   };
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setSearch((search) => (!search ? true : search));
-    setParams((params) => {
-      const newParams = { ...params, name };
-      return newParams;
-    });
-    setName("");
-  };
-
   const handleCompanyChange = (value: string) => {
     setCompany(value);
 
@@ -163,27 +97,7 @@ export default function Album() {
   // console.log(products);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <CameraIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Store
-          </Typography>
-          <Search onSubmit={handleSearch}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Search>
-        </Toolbar>
-      </AppBar>
+    <>
       <main>
         {/* Hero unit */}
         <Box
@@ -321,6 +235,6 @@ export default function Album() {
         <Copyright />
       </Box>
       {/* End footer */}
-    </ThemeProvider>
+    </>
   );
 }
