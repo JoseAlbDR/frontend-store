@@ -6,38 +6,34 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useStore } from "../context/storeContext";
 import { useNavigate } from "react-router-dom";
+import { useFilter } from "../hooks/useFilter";
 
 export default function Filters() {
   const navigate = useNavigate();
-  const { setFeatured, setSearch, setParams, featured, company, setCompany } =
-    useStore();
+  const setUrlFilter = useFilter();
+  const {
+    setFeatured,
+    setSearch,
+    setUrlParams,
+    featured,
+    company,
+    setCompany,
+  } = useStore();
 
   const handleFeatured = () => {
-    setFeatured((featured) => (featured === "true" ? "false" : "true"));
-    console.log(featured);
-    setSearch((search) => (!search ? true : search));
-    setParams((params) => {
-      const newParams = { ...params, featured };
-      return newParams;
-    });
+    const updatedFeatured = featured === "true" ? "false" : "true";
+    setUrlFilter(setFeatured, updatedFeatured, "featured");
+  };
+
+  const handleCompanyChange = (value: string) => {
+    setUrlFilter(setCompany, value, "company");
   };
 
   const handleAll = () => {
     setSearch(false);
-    setParams({});
+    setUrlParams({});
     navigate("/");
   };
-
-  const handleCompanyChange = (value: string) => {
-    setCompany(value);
-
-    setSearch((search) => (!search ? true : search));
-    setParams((params) => {
-      const newParams = { ...params, company: value };
-      return newParams;
-    });
-  };
-
   return (
     <Box sx={{ display: "flex" }}>
       <Button onClick={handleAll}>All</Button>
