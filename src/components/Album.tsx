@@ -15,12 +15,12 @@ export default function Album() {
 
   useEffect(() => {
     if (search) {
-      console.log(urlParams);
       navigate({
         pathname: "/search",
         search: `?${createSearchParams(urlParams as URLSearchParams)}`,
       });
     }
+    console.log(urlParams);
   }, [urlParams, navigate, search]);
 
   return (

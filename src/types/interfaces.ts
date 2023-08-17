@@ -10,6 +10,15 @@ export interface IProduct {
   featured?: boolean;
 }
 
+export interface IState {
+  urlParams: Query;
+  name: string;
+  featured: string;
+  company: ICompany;
+  sortBy: string;
+  search: boolean;
+}
+
 export interface Query {
   featured?: string;
   name?: string;
@@ -35,6 +44,7 @@ export interface IStoreContext {
   sortBy: string;
   setSortBy: React.Dispatch<React.SetStateAction<string>>;
   reset: () => void;
+  noFilters: () => void;
 }
 
 export interface IProductProps {

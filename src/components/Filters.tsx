@@ -12,14 +12,13 @@ export default function Filters() {
   const { setUrlFilter } = useFilter();
   const {
     setFeatured,
-    setSearch,
-    setUrlParams,
     featured,
     company,
     setCompany,
     sortBy,
     setSortBy,
     reset,
+    noFilters,
   } = useStore();
 
   const { companies, isLoading } = useCompanies();
@@ -38,8 +37,7 @@ export default function Filters() {
   };
 
   const handleAll = () => {
-    setSearch(false);
-    setUrlParams({});
+    noFilters();
     navigate("/");
   };
 
