@@ -7,6 +7,9 @@ import MenuItem from "@mui/material/MenuItem";
 import { useStore } from "../context/storeContext";
 import { useNavigate } from "react-router-dom";
 import { useFilter } from "../hooks/useFilter";
+import _ from "lodash";
+import { useCompanies } from "../hooks/useCompanies";
+import { CircularProgress } from "@mui/material";
 
 export default function Filters() {
   const navigate = useNavigate();
@@ -19,6 +22,8 @@ export default function Filters() {
     company,
     setCompany,
   } = useStore();
+
+  const { companies, isLoading } = useCompanies();
 
   const handleFeatured = () => {
     const updatedFeatured = featured === "true" ? "false" : "true";
@@ -35,24 +40,33 @@ export default function Filters() {
     navigate("/");
   };
   return (
-    <Box sx={{ display: "flex" }}>
-      <Button onClick={handleAll}>All</Button>
-      <Button onClick={handleFeatured}>Featured</Button>
-      <FormControl sx={{ width: "200px" }}>
-        <InputLabel id="demo-simple-select-label">Company</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={company}
-          label="Company"
-          onChange={(e) => handleCompanyChange(e.target.value)}
-        >
-          <MenuItem value={"ikea"}>Ikea</MenuItem>
-          <MenuItem value={"marcos"}>Marcos</MenuItem>
-          <MenuItem value={"liddy"}>Liddy</MenuItem>
-          <MenuItem value={"caressa"}>Caressa</MenuItem>
-        </Select>
-      </FormControl>
+    <Box
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
+      <>
+        <Button onClick={handleAll}>All</Button>
+        <Button onClick={handleFeatured}>Featured</Button>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <FormControl sx={{ width: "200px" }}>
+            <InputLabel id="demo-simple-select-label">Company</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={company}
+              label="Company"
+              onChange={(e) => handleCompanyChange(e.target.value)}
+            >
+              {companies.map((company, index) => (
+                <MenuItem key={index} value={company}>
+                  {_.capitalize(company)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+      </>
     </Box>
   );
 }
