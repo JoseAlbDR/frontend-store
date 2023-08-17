@@ -23,27 +23,26 @@ export default function Album() {
     }
   }, [params, navigate, search]);
 
-  console.log(isLoading);
-  if (isLoading) return <CircularProgress />;
-
-  if (!products || isError)
-    return <Alert severity="error">Error Fetching Products</Alert>;
-
   return (
     <>
-      <Container sx={{ py: 8 }} maxWidth="md">
-        {/* End hero unit */}
-        <Grid container spacing={4}>
-          {isLoading && <CircularProgress />}
-          {!products.length && (
-            <Alert severity="info" sx={{ width: "100%" }}>
-              No products meets the filters.
-            </Alert>
-          )}
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </Grid>
+      <Container sx={{ py: 8, textAlign: "center" }} maxWidth="md">
+        {isLoading ? (
+          <CircularProgress />
+        ) : !products || isError ? (
+          <Alert severity="error">Error Fetching Products</Alert>
+        ) : (
+          <Grid container spacing={4}>
+            {isLoading && <CircularProgress />}
+            {!products.length && (
+              <Alert severity="info" sx={{ width: "100%" }}>
+                No products meets the filters.
+              </Alert>
+            )}
+            {products.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </Grid>
+        )}
       </Container>
     </>
   );
