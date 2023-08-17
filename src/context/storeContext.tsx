@@ -1,20 +1,11 @@
 import { createContext, useState, useContext } from "react";
-import { Query, StoreContextProviderProps } from "../types/interfaces";
+import {
+  IStoreContext,
+  Query,
+  StoreContextProviderProps,
+} from "../types/interfaces";
 
 const StoreContext = createContext({});
-
-interface IStoreContext {
-  params: Query;
-  setParams: React.Dispatch<React.SetStateAction<Query>>;
-  search: boolean;
-  setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-  featured: string;
-  setFeatured: React.Dispatch<React.SetStateAction<string>>;
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  company: string;
-  setCompany: React.Dispatch<React.SetStateAction<string>>;
-}
 
 function StoreProvider({ children }: StoreContextProviderProps) {
   const [params, setParams] = useState<Query>({});
