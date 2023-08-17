@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import { alpha, styled } from "@mui/material";
 import { useStore } from "../context/storeContext";
 import SearchIcon from "@mui/icons-material/Search";
+import { useFilter } from "../hooks/useFilter";
 
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
@@ -53,15 +54,12 @@ const StyledInputBase = styled(TextField)(({ theme }) => ({
 }));
 
 export default function SearchBar() {
-  const { setSearch, setParams, setName, name } = useStore();
+  const { setName, name } = useStore();
+  const { setUrlFilter } = useFilter();
 
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setSearch((search) => (!search ? true : search));
-    setParams((params) => {
-      const newParams = { ...params, name };
-      return newParams;
-    });
+    setUrlFilter(setName, name, "name");
     setName("");
   };
 
