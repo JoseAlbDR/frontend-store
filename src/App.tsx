@@ -16,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Album />} />
+          <Route path="search" element={<Album />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
