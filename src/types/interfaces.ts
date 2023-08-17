@@ -15,3 +15,20 @@ export interface Query {
   name?: string;
   company?: string;
 }
+
+export interface StoreContextProviderProps {
+  children: JSX.Element | JSX.Element[];
+}
+
+export interface IStoreContext {
+  params: Query;
+  setParams: React.Dispatch<React.SetStateAction<Query>>;
+  search: boolean;
+  setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  featured: string;
+  setFeatured: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  company: string;
+  setCompany: React.Dispatch<React.SetStateAction<string>>;
+}
