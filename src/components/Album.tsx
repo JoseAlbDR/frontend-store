@@ -11,18 +11,17 @@ import ProductCard from "./ProductCard";
 export default function Album() {
   const navigate = useNavigate();
   const { isLoading, data, isError } = useProducts();
-  const { params, search } = useStore();
+  const { urlParams, search } = useStore();
 
-  console.log(data);
   useEffect(() => {
     if (search) {
-      console.log(params);
+      console.log(urlParams);
       navigate({
         pathname: "/search",
-        search: `?${createSearchParams(params as URLSearchParams)}`,
+        search: `?${createSearchParams(urlParams as URLSearchParams)}`,
       });
     }
-  }, [params, navigate, search]);
+  }, [urlParams, navigate, search]);
 
   return (
     <>
