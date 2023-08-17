@@ -36,7 +36,10 @@ export default function Album() {
             <Grid container spacing={4}>
               {isLoading && <CircularProgress />}
               {!data.products.length && (
-                <Alert severity="info" sx={{ width: "100%" }}>
+                <Alert
+                  severity="info"
+                  sx={{ width: "100%", marginTop: "15px" }}
+                >
                   No products meets the filters.
                 </Alert>
               )}
