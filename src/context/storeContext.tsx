@@ -47,7 +47,7 @@ function useStore(): IStoreContext {
   const context = useContext(StoreContext);
   if (context === undefined)
     throw new Error("StoreContext was used outside of the StoreProvider");
-  return context;
+  return context as IStoreContext;
 }
 
 export { StoreProvider, useStore };
