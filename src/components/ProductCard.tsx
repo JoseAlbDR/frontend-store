@@ -20,10 +20,7 @@ export default function ProductCard({ product }: IProductProps) {
       >
         <CardMedia
           component="div"
-          sx={{
-            // 16:9
-            pt: "56.25%",
-          }}
+          sx={{ pt: "56.25%" }}
           image={`https://source.unsplash.com/random?${product.name
             .split(" ")
             .at(-1)}`}
@@ -36,9 +33,24 @@ export default function ProductCard({ product }: IProductProps) {
             flexDirection: "column",
           }}
         >
-          <Typography gutterBottom variant="h5" component="h2">
-            {_.capitalize(product.name)}
-          </Typography>
+          <div
+            style={{
+              backgroundColor: "grey",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              style={{ marginBottom: 0, padding: "10px 0" }}
+            >
+              {_.capitalize(product.name)}
+            </Typography>
+          </div>
           <Typography gutterBottom variant="h6" component="h3">
             Company: {_.capitalize(product.company)}
           </Typography>
@@ -48,7 +60,7 @@ export default function ProductCard({ product }: IProductProps) {
               justifyContent: "space-between",
             }}
           >
-            <Typography>Price: {product.price}</Typography>
+            <Typography>Price: ${product.price}</Typography>
             <Typography>Rating: {product.rating}</Typography>
           </Box>
           <Typography>Featured: {product.featured ? "Yes" : "No"}</Typography>
