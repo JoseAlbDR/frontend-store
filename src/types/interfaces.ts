@@ -14,6 +14,7 @@ export interface Query {
   featured?: string;
   name?: string;
   company?: string;
+  sortBy?: string;
 }
 
 export interface StoreContextProviderProps {
@@ -31,10 +32,20 @@ export interface IStoreContext {
   setName: React.Dispatch<React.SetStateAction<string>>;
   company: string;
   setCompany: React.Dispatch<React.SetStateAction<string>>;
+  sortBy: string;
+  setSortBy: React.Dispatch<React.SetStateAction<string>>;
+  reset: () => void;
 }
 
 export interface IProductProps {
   product: IProduct;
+}
+
+export interface ISelectProps {
+  data: ICompany[] | string[];
+  value: string;
+  onChange: (value: string) => void;
+  label: string;
 }
 
 export interface ProductResponse {
