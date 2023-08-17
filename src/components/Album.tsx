@@ -17,15 +17,16 @@ import Link from "@mui/material/Link";
 import SearchIcon from "@mui/icons-material/Search";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useProducts } from "../hooks/useProducts";
-import { alpha, CircularProgress, styled } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { Alert, alpha, CircularProgress, styled } from "@mui/material";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-// import { ICompany } from "../types/interfaces";
+import { Query } from "../types/interfaces";
+// import { ICompany, Query } from '../types/interfaces';
 
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
@@ -89,37 +90,66 @@ function Copyright() {
 const defaultTheme = createTheme();
 
 export default function Album() {
-  const { isLoading, products } = useProducts();
-  const [featured, setFeatured] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("ikea");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [params, setParams] = useState<Query>({});
+  const [search, setSearch] = useState(false);
+  const { isLoading, products, isError } = useProducts();
+  const [featured, setFeatured] = useState("false");
+  const [name, setName] = useState("");
   const [company, setCompany] = useState("");
-  if (isLoading) return <CircularProgress />;
 
-  if (!products) return;
+  useEffect(() => {
+    if (search) {
+      console.log(params);
+      navigate({
+        pathname: "/search",
+        search: `?${createSearchParams(params as URLSearchParams)}`,
+      });
+    }
+    // setSearch((search) => (!search ? true : false));
+  }, [params, navigate, search]);
+
+  if (isLoading) return <CircularProgress />;
+  console.log();
+
+  if (!products || isError)
+    return <Alert severity="error">Error Fetching Products</Alert>;
 
   const handleFeatured = () => {
-    setFeatured((featured) => !featured);
-    searchParams.set("featured", String(featured));
-    setSearchParams(searchParams);
+    setFeatured((featured) => (featured === "true" ? "false" : "true"));
+    console.log(featured);
+    setSearch((search) => (!search ? true : search));
+    setParams((params) => {
+      const newParams = { ...params, featured };
+      return newParams;
+    });
   };
 
   const handleAll = () => {
-    const queryParams = "";
-    setSearchParams(queryParams);
+    setSearch(false);
+    setParams({});
+    navigate("/");
   };
 
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    searchParams.set("name", searchQuery);
-    setSearchParams(searchParams);
-    setSearchQuery("");
+    setSearch((search) => (!search ? true : false));
+    setParams((params) => {
+      const newParams = { ...params, name };
+      return newParams;
+    });
+    setName("");
   };
 
   const handleCompanyChange = (e: { target: { value: string } }) => {
     setCompany(e.target.value);
-    searchParams.set("company", e.target.value);
-    setSearchParams(searchParams);
+    console.log(e.target.value);
+    console.log(company);
+    setSearch((search) => (!search ? true : false));
+    setParams((params) => {
+      const newParams = { ...params, company };
+      return newParams;
+    });
   };
   // console.log(products);
 
@@ -139,8 +169,8 @@ export default function Album() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </Search>
         </Toolbar>
@@ -195,24 +225,17 @@ export default function Album() {
                 <MenuItem value={"caressa"}>Caressa</MenuItem>
               </Select>
             </FormControl>
-            {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-            {/* <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={company}
-              label={company}
-              onChange={(e) => setCompany(e.target.value)}
-            >
-              <MenuItem value={"ikea"}>Ikea</MenuItem>
-              <MenuItem value={"marcos"}>Marcos</MenuItem>
-              <MenuItem value={"liddy"}>Liddy</MenuItem>
-              <MenuItem value={"caress"}>Caressa</MenuItem>
-            </Select> */}
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
+            {isLoading && <CircularProgress />}
+            {!products.length && (
+              <Alert severity="info" sx={{ width: "100%" }}>
+                No products meets the filters.
+              </Alert>
+            )}
             {products.map((product) => (
               <Grid item key={product._id} xs={12} sm={6} md={4}>
                 <Card
