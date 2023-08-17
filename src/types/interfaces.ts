@@ -32,3 +32,7 @@ export interface IStoreContext {
   company: string;
   setCompany: React.Dispatch<React.SetStateAction<string>>;
 }
+
+export interface IProductProps {
+  product: IProduct;
+}
