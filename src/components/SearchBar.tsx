@@ -1,6 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { alpha, styled } from "@mui/material";
@@ -68,7 +68,7 @@ export default function SearchBar() {
   return (
     <AppBar position="relative">
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <CameraIcon sx={{ mr: 2 }} />
+        <LocalGroceryStoreIcon sx={{ mr: 2 }} />
         <Typography variant="h6" color="inherit" noWrap>
           Store
         </Typography>
