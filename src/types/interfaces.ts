@@ -21,8 +21,8 @@ export interface StoreContextProviderProps {
 }
 
 export interface IStoreContext {
-  params: Query;
-  setParams: React.Dispatch<React.SetStateAction<Query>>;
+  urlParams: Query;
+  setUrlParams: React.Dispatch<React.SetStateAction<Query>>;
   search: boolean;
   setSearch: React.Dispatch<React.SetStateAction<boolean>>;
   featured: string;
