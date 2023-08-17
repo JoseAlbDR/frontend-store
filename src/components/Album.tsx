@@ -208,23 +208,25 @@ export default function Album() {
               spacing={2}
               justifyContent="center"
             ></Stack>
-            <Button onClick={handleAll}>All</Button>
-            <Button onClick={handleFeatured}>Featured</Button>
-            <FormControl sx={{ width: "200px" }}>
-              <InputLabel id="demo-simple-select-label">Company</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={company}
-                label="Company"
-                onChange={(e) => handleCompanyChange(e.target.value)}
-              >
-                <MenuItem value={"ikea"}>Ikea</MenuItem>
-                <MenuItem value={"marcos"}>Marcos</MenuItem>
-                <MenuItem value={"liddy"}>Liddy</MenuItem>
-                <MenuItem value={"caressa"}>Caressa</MenuItem>
-              </Select>
-            </FormControl>
+            <Box sx={{ display: "flex" }}>
+              <Button onClick={handleAll}>All</Button>
+              <Button onClick={handleFeatured}>Featured</Button>
+              <FormControl sx={{ width: "200px" }}>
+                <InputLabel id="demo-simple-select-label">Company</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={company}
+                  label="Company"
+                  onChange={(e) => handleCompanyChange(e.target.value)}
+                >
+                  <MenuItem value={"ikea"}>Ikea</MenuItem>
+                  <MenuItem value={"marcos"}>Marcos</MenuItem>
+                  <MenuItem value={"liddy"}>Liddy</MenuItem>
+                  <MenuItem value={"caressa"}>Caressa</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
