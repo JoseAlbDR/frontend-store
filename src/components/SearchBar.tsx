@@ -66,11 +66,14 @@ export default function SearchBar() {
   };
 
   return (
-    <AppBar position="relative">
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+    <AppBar
+      position="relative"
+      sx={{ position: "sticky", top: "0", boxShadow: "none" }}
+    >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-around" }}>
         <LocalGroceryStoreIcon sx={{ mr: 2 }} />
         <Typography variant="h6" color="inherit" noWrap>
-          Store
+          Store Api Demo
         </Typography>
         <Search onSubmit={handleSearch}>
           <SearchIconWrapper>

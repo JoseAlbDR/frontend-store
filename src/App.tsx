@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Album from "./components/Album";
 import AppLayout from "./components/AppLayout";
 import { StoreProvider } from "./context/storeContext";
+import "./App.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {
