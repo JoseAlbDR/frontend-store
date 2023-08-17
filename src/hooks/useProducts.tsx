@@ -22,14 +22,10 @@ export const useProducts = () => {
     query.company = company;
   }
 
-  const {
-    isLoading,
-    data: products,
-    isError,
-  } = useQuery({
+  const { isLoading, data, isError } = useQuery({
     queryKey: ["products", featured, name, company],
     queryFn: () => getProduts(query),
   });
 
-  return { isLoading, products, isError };
+  return { isLoading, data, isError };
 };
