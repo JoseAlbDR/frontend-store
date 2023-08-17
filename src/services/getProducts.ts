@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ProductResponse, Query } from "../types/interfaces";
+import { STORE_API_URL as apiUrl } from "../config";
 import _ from "lodash";
 
 export const getProduts = async (
@@ -24,9 +25,7 @@ export const getProduts = async (
   console.log(finalQuery);
 
   try {
-    const products = await axios.get(
-      `http://127.0.0.1:3000/api/v1/products${finalQuery}`
-    );
+    const products = await axios.get(`${apiUrl}${finalQuery}`);
 
     if (!products) throw new Error("Error getting products");
     return products.data;
