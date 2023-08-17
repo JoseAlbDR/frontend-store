@@ -26,6 +26,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { Query } from "../types/interfaces";
+import _ from "lodash";
 // import { ICompany, Query } from '../types/interfaces';
 
 const Search = styled("form")(({ theme }) => ({
@@ -133,7 +134,7 @@ export default function Album() {
 
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setSearch((search) => (!search ? true : false));
+    setSearch((search) => (!search ? true : search));
     setParams((params) => {
       const newParams = { ...params, name };
       return newParams;
@@ -141,13 +142,12 @@ export default function Album() {
     setName("");
   };
 
-  const handleCompanyChange = (e: { target: { value: string } }) => {
-    setCompany(e.target.value);
-    console.log(e.target.value);
-    console.log(company);
-    setSearch((search) => (!search ? true : false));
+  const handleCompanyChange = (value: string) => {
+    setCompany(value);
+
+    setSearch((search) => (!search ? true : search));
     setParams((params) => {
-      const newParams = { ...params, company };
+      const newParams = { ...params, company: value };
       return newParams;
     });
   };
@@ -217,7 +217,7 @@ export default function Album() {
                 id="demo-simple-select"
                 value={company}
                 label="Company"
-                onChange={handleCompanyChange}
+                onChange={(e) => handleCompanyChange(e.target.value)}
               >
                 <MenuItem value={"ikea"}>Ikea</MenuItem>
                 <MenuItem value={"marcos"}>Marcos</MenuItem>
@@ -265,10 +265,10 @@ export default function Album() {
                     }}
                   >
                     <Typography gutterBottom variant="h5" component="h2">
-                      {product.name}
+                      {_.capitalize(product.name)}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="h3">
-                      Company: {product.company}
+                      Company: {_.capitalize(product.company)}
                     </Typography>
                     <Box
                       sx={{
