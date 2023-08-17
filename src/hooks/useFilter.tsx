@@ -15,5 +15,5 @@ export const useFilter = () => {
     });
   };
 
-  return setUrlFilter;
+  return { setUrlFilter };
 };
