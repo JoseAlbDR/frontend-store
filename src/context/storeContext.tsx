@@ -8,7 +8,7 @@ import {
 const StoreContext = createContext({});
 
 function StoreProvider({ children }: StoreContextProviderProps) {
-  const [params, setParams] = useState<Query>({});
+  const [urlParams, setUrlParams] = useState<Query>({});
   const [search, setSearch] = useState(false);
   const [featured, setFeatured] = useState("false");
   const [name, setName] = useState("");
@@ -17,8 +17,8 @@ function StoreProvider({ children }: StoreContextProviderProps) {
   return (
     <StoreContext.Provider
       value={{
-        params,
-        setParams,
+        urlParams,
+        setUrlParams,
         search,
         setSearch,
         featured,
