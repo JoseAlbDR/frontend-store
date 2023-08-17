@@ -19,14 +19,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useProducts } from "../hooks/useProducts";
 import { Alert, alpha, CircularProgress, styled } from "@mui/material";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import { Query } from "../types/interfaces";
 import _ from "lodash";
+import { useStore } from "../context/storeContext";
 // import { ICompany, Query } from '../types/interfaces';
 
 const Search = styled("form")(({ theme }) => ({
@@ -92,12 +92,21 @@ const defaultTheme = createTheme();
 
 export default function Album() {
   const navigate = useNavigate();
-  const [params, setParams] = useState<Query>({});
-  const [search, setSearch] = useState(false);
+
   const { isLoading, products, isError } = useProducts();
-  const [featured, setFeatured] = useState("false");
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
+
+  const {
+    params,
+    setParams,
+    search,
+    setSearch,
+    featured,
+    setFeatured,
+    name,
+    setName,
+    company,
+    setCompany,
+  } = useStore();
 
   useEffect(() => {
     if (search) {
