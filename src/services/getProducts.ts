@@ -21,9 +21,7 @@ export const getProduts = async (
   }
 
   if (params.sortBy) {
-    console.log(params.sortBy);
     const [value, direction] = params.sortBy.toLowerCase().split(" ");
-    console.log(value, direction);
     direction === "asc"
       ? query.push(`sort=${value === "date" ? "createdAt" : value}`)
       : query.push(`sort=-${value}`);
