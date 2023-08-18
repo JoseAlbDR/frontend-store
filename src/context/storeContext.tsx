@@ -20,7 +20,6 @@ const initialState: IState = {
 function reducer(state: IState, action: Action): IState {
   switch (action.type) {
     case "url/updated":
-      console.log(action.payload);
       return {
         ...state,
         featured: action.payload.featured || state.featured,
@@ -51,7 +50,6 @@ function StoreProvider({ children }: StoreContextProviderProps) {
   };
 
   const updateName = (value: string) => {
-    console.log(value);
     dispatch({ type: "name/changed", payload: value });
   };
 
@@ -61,7 +59,6 @@ function StoreProvider({ children }: StoreContextProviderProps) {
     value: string,
     urlParams: Query
   ) => {
-    console.log(search, filter, value, urlParams);
     dispatch({
       type: "url/updated",
       payload: { search, [filter]: value, urlParams },
