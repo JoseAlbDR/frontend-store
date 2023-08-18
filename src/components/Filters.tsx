@@ -6,6 +6,7 @@ import { useFilter } from "../hooks/useFilter";
 import { useCompanies } from "../hooks/useCompanies";
 import { CircularProgress } from "@mui/material";
 import SelectList from "./SelectList";
+import Fields from "./Fields";
 
 export default function Filters() {
   const navigate = useNavigate();
@@ -44,11 +45,17 @@ export default function Filters() {
   ];
   return (
     <Box
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
     >
       <>
         <Button onClick={handleAll}>All</Button>
         <Button onClick={handleFeatured}>Featured</Button>
+        <Fields />
         {isLoading ? (
           <CircularProgress />
         ) : (
