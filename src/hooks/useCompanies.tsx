@@ -10,5 +10,6 @@ export const useCompanies = () => {
   // console.log(data);
 
   const companies = _.uniq(data?.products.map((product) => product.company));
+  companies.unshift("all");
   return { isLoading, companies, isError };
 };
