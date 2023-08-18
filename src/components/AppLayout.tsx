@@ -24,7 +24,7 @@ export default function AppLayout() {
       <Header>
         <SearchBar />
         <Box sx={{ bgcolor: "background.paper", pt: 2, pb: 2 }}>
-          <Container maxWidth="sm">
+          <Container>
             <Filters />
           </Container>
         </Box>
