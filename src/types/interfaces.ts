@@ -1,4 +1,4 @@
-export type ICompany = "marcos" | "liddy" | "ikea" | "caressa";
+export type ICompany = "marcos" | "liddy" | "ikea" | "caressa" | "";
 
 export interface IProduct {
   _id: string;
@@ -32,19 +32,19 @@ export interface StoreContextProviderProps {
 
 export interface IStoreContext {
   urlParams: Query;
-  setUrlParams: React.Dispatch<React.SetStateAction<Query>>;
   search: boolean;
-  setSearch: React.Dispatch<React.SetStateAction<boolean>>;
   featured: string;
-  setFeatured: React.Dispatch<React.SetStateAction<string>>;
   name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
   company: string;
-  setCompany: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
-  setSortBy: React.Dispatch<React.SetStateAction<string>>;
   reset: () => void;
-  noFilters: () => void;
+  updateUrl: (
+    search: boolean,
+    filter: string,
+    value: string,
+    urlParams: Query
+  ) => void;
+  updateName: (value: string) => void;
 }
 
 export interface IProductProps {
@@ -62,3 +62,18 @@ export interface ProductResponse {
   nbHits: number;
   products: IProduct[];
 }
+
+type UpdateUrlPayload = {
+  search: boolean;
+  company?: ICompany;
+  featured?: string;
+  sortBy?: string;
+  urlParams: Query;
+};
+
+type NameChangedPayload = string;
+
+export type Action =
+  | { type: "url/updated"; payload: UpdateUrlPayload }
+  | { type: "products/all" }
+  | { type: "name/changed"; payload: NameChangedPayload };
