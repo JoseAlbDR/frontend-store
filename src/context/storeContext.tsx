@@ -1,125 +1,85 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
 import {
+  Action,
+  IState,
   IStoreContext,
   Query,
   StoreContextProviderProps,
 } from "../types/interfaces";
 
 const StoreContext = createContext({});
-// const initialState: IState = {
-//   urlParams: {},
-//   search: false,
-//   featured: "false",
-//   name: "",
-//   company: "ikea",
-//   sortBy: "",
-// };
+const initialState: IState = {
+  urlParams: {},
+  search: false,
+  featured: "false",
+  name: "",
+  company: "",
+  sortBy: "",
+};
 
-// function reducer(state: IState, action: { type: string; payload: any }) {
-//   console.log(action.type);
-//   switch (action.type) {
-//     case "clearFilters":
-//       return initialState;
-//     case "reset":
-//       return initialState;
-//     case "urlParams/changed":
-//       return {
-//         ...state,
-//         urlParams: action.payload,
-//       };
-//     case "search/togle":
-//       return {
-//         ...state,
-//         search: action.payload,
-//       };
-//     case "featured/changed":
-//       return {
-//         ...state,
-//         featured: action.payload,
-//       };
-//     case "name/changed":
-//       return {
-//         ...state,
-//         name: action.payload,
-//       };
-//     case "company/changed":
-//       return {
-//         ...state,
-//         name: action.payload,
-//       };
-//     case "sortBy/changed":
-//       return {
-//         ...state,
-//         sortBy: action.payload,
-//       };
-//     default:
-//       throw new Error("Unknown action type");
-//   }
-// }
+function reducer(state: IState, action: Action): IState {
+  switch (action.type) {
+    case "url/updated":
+      console.log(action.payload);
+      return {
+        ...state,
+        featured: action.payload.featured || state.featured,
+        company: action.payload.company || state.company,
+        sortBy: action.payload.sortBy || state.sortBy,
+        urlParams: action.payload.urlParams || state.urlParams,
+        search: action.payload.search,
+      };
+    case "products/all":
+      return initialState;
+    case "name/changed":
+      return {
+        ...state,
+        name: action.payload,
+      };
+
+    default:
+      throw new Error("Unknown action type");
+  }
+}
 
 function StoreProvider({ children }: StoreContextProviderProps) {
-  const [urlParams, setUrlParams] = useState<Query>({});
-  const [search, setSearch] = useState(false);
-  const [featured, setFeatured] = useState("false");
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  // const [state, dispatch] = useReducer(reducer, initialState);
-
-  // const noFilters = () => {
-  //   dispatch({ type: "clearFilters", payload: "" });
-  // };
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { featured, company, search, urlParams, sortBy, name } = state;
 
   const reset = () => {
-    setName("");
-    setCompany("");
-    setSortBy("");
+    dispatch({ type: "products/all" });
   };
 
-  // const setUrlParams = (value: Query) => {
-  //   dispatch({ type: "urlParams/changed", payload: value });
-  // };
+  const updateName = (value: string) => {
+    console.log(value);
+    dispatch({ type: "name/changed", payload: value });
+  };
 
-  // const setSearch = (value: boolean) => {
-  //   dispatch({ type: "search/togle", payload: value });
-  // };
-
-  // const setFeatured = (value: string) => {
-  //   console.log(value);
-  //   dispatch({ type: "featured/changed", payload: value });
-  // };
-
-  // const setName = (value: string) => {
-  //   dispatch({ type: "name", payload: value });
-  // };
-
-  // const setCompany = (value: string) => {
-  //   dispatch({ type: "company", payload: value });
-  // };
-
-  // const setSortBy = (value: string) => {
-  //   dispatch({ type: "sortBy", payload: value });
-  // };
-
-  // const { urlParams, search, featured, name, company, sortBy } = state;
+  const updateUrl = (
+    search: boolean,
+    filter: string,
+    value: string,
+    urlParams: Query
+  ) => {
+    console.log(search, filter, value, urlParams);
+    dispatch({
+      type: "url/updated",
+      payload: { search, [filter]: value, urlParams },
+    });
+  };
 
   return (
     <StoreContext.Provider
       value={{
         urlParams,
-        setUrlParams,
         search,
-        setSearch,
         featured,
-        setFeatured,
         name,
-        setName,
         company,
-        setCompany,
         sortBy,
-        setSortBy,
         reset,
-        // noFilters,
+        updateUrl,
+        updateName,
       }}
     >
       {children}
