@@ -10,34 +10,25 @@ import SelectList from "./SelectList";
 export default function Filters() {
   const navigate = useNavigate();
   const { setUrlFilter } = useFilter();
-  const {
-    setFeatured,
-    featured,
-    company,
-    setCompany,
-    sortBy,
-    setSortBy,
-    reset,
-    noFilters,
-  } = useStore();
+  const { featured, company, sortBy, reset } = useStore();
 
   const { companies, isLoading } = useCompanies();
 
   const handleFeatured = () => {
     const updatedFeatured = featured === "true" ? "false" : "true";
-    setUrlFilter(setFeatured, updatedFeatured, "featured");
+    setUrlFilter(updatedFeatured, "featured");
   };
 
   const handleCompanyChange = (value: string) => {
-    setUrlFilter(setCompany, value, "company");
+    setUrlFilter(value, "company");
   };
 
   const handleSortByChange = (value: string) => {
-    setUrlFilter(setSortBy, value, "sortBy");
+    setUrlFilter(value, "sortBy");
   };
 
   const handleAll = () => {
-    noFilters();
+    reset();
     navigate("/");
   };
 
@@ -56,7 +47,6 @@ export default function Filters() {
       sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       <>
-        <Button onClick={reset}>Reset</Button>
         <Button onClick={handleAll}>All</Button>
         <Button onClick={handleFeatured}>Featured</Button>
         {isLoading ? (
