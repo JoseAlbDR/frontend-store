@@ -39,7 +39,9 @@ export default function Album() {
                   severity="info"
                   sx={{ width: "100%", marginTop: "15px" }}
                 >
-                  No products meets the filters.
+                  {`No products meets the filters: ${Object.entries(urlParams)
+                    .map((entry) => entry.join("="))
+                    .join(", ")}`}
                 </Alert>
               )}
               {data.products.map((product) => (
