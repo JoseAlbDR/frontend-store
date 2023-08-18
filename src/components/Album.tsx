@@ -20,7 +20,6 @@ export default function Album() {
         search: `?${createSearchParams(urlParams as URLSearchParams)}`,
       });
     }
-    console.log(urlParams);
   }, [urlParams, navigate, search]);
 
   return (
