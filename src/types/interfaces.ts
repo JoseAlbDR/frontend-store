@@ -1,4 +1,4 @@
-export type ICompany = "marcos" | "liddy" | "ikea" | "caressa" | "";
+export type ICompany = "marcos" | "liddy" | "ikea" | "caressa" | "" | "all";
 
 export interface IProduct {
   _id: string;
