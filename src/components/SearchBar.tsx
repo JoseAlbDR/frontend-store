@@ -54,13 +54,13 @@ const StyledInputBase = styled(TextField)(({ theme }) => ({
 }));
 
 export default function SearchBar() {
-  const { setName, name } = useStore();
+  const { updateName, name } = useStore();
   const { setUrlFilter } = useFilter();
 
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setUrlFilter(setName, name, "name");
-    setName("");
+    setUrlFilter(name, "name");
+    updateName("");
   };
 
   return (
@@ -81,7 +81,7 @@ export default function SearchBar() {
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => updateName(e.target.value)}
           />
         </Search>
       </Toolbar>
