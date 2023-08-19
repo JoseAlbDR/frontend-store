@@ -24,6 +24,10 @@ export const getProduts = async (
     query.push(`limit=${params.limit}`);
   }
 
+  if (params.page) {
+    query.push(`page=${params.page}`);
+  }
+
   if (params.sortBy) {
     const [value, direction] = params.sortBy.toLowerCase().split(" ");
     direction === "asc"

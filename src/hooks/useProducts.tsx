@@ -11,6 +11,7 @@ export const useProducts = () => {
   const sortBy = searchParams.get("sortBy");
   const fields = searchParams.get("fields");
   const limit = searchParams.get("limit");
+  const page = searchParams.get("page");
   const query: Query = {};
 
   const allowedParams = [
@@ -20,6 +21,7 @@ export const useProducts = () => {
     "fields",
     "featured",
     "limit",
+    "page",
   ];
 
   if (featured) {
@@ -46,8 +48,21 @@ export const useProducts = () => {
     query.limit = limit;
   }
 
+  if (page) {
+    query.page = page;
+  }
+
   const { isLoading, data, isError, error } = useQuery({
-    queryKey: ["products", featured, name, company, sortBy, fields, limit],
+    queryKey: [
+      "products",
+      featured,
+      name,
+      company,
+      sortBy,
+      fields,
+      limit,
+      page,
+    ],
     queryFn: () => {
       const params = Object.fromEntries(searchParams.entries());
       const keys = Object.keys(params);
