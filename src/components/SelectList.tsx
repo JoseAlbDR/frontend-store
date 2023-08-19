@@ -11,6 +11,7 @@ export default function SortBy({ data, value, onChange, label }: ISelectProps) {
         id="demo-simple-select"
         value={value}
         label={label}
+        sx={{ width: "130px" }}
         onChange={(e) => onChange(e.target.value)}
       >
         {data.map((item: string, index: number) => (
