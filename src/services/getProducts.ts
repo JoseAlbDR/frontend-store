@@ -20,11 +20,15 @@ export const getProduts = async (
     query.push(`company=${params.company}`);
   }
 
+  if (params.fields) {
+    query.push(`fields=${params.fields}`);
+  }
+
   if (params.sortBy) {
     const [value, direction] = params.sortBy.toLowerCase().split(" ");
     direction === "asc"
       ? query.push(`sort=${value === "date" ? "createdAt" : value}`)
-      : query.push(`sort=-${value}`);
+      : query.push(`sort=${value === "date" ? "-createdAt" : value}`);
   }
 
   const finalQuery = `${_.isEmpty(params) ? "" : "?"}${query.join("&")}`;
