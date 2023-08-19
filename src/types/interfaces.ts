@@ -17,13 +17,19 @@ export interface IState {
   company: ICompany;
   sortBy: string;
   search: boolean;
+  fields: IFields;
 }
+
+export type IFields = {
+  [x: string]: boolean;
+};
 
 export interface Query {
   featured?: string;
   name?: string;
   company?: string;
   sortBy?: string;
+  fields?: string;
 }
 
 export interface StoreContextProviderProps {
@@ -37,6 +43,7 @@ export interface IStoreContext {
   name: string;
   company: string;
   sortBy: string;
+  fields: IFields;
   reset: () => void;
   updateUrl: (
     search: boolean,
@@ -45,6 +52,7 @@ export interface IStoreContext {
     urlParams: Query
   ) => void;
   updateName: (value: string) => void;
+  updateFields: (fields: IFields) => void;
 }
 
 export interface IProductProps {
@@ -69,6 +77,7 @@ type UpdateUrlPayload = {
   featured?: string;
   sortBy?: string;
   urlParams: Query;
+  fields?: string[];
 };
 
 type NameChangedPayload = string;
@@ -76,4 +85,5 @@ type NameChangedPayload = string;
 export type Action =
   | { type: "url/updated"; payload: UpdateUrlPayload }
   | { type: "products/all" }
-  | { type: "name/changed"; payload: NameChangedPayload };
+  | { type: "name/changed"; payload: NameChangedPayload }
+  | { type: "fields/changed"; payload: IFields };
