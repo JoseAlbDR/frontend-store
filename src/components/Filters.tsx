@@ -11,7 +11,7 @@ import Fields from "./Fields";
 export default function Filters() {
   const navigate = useNavigate();
   const { setUrlFilter } = useFilter();
-  const { featured, company, sortBy, reset } = useStore();
+  const { featured, company, sortBy, limit, reset } = useStore();
 
   const { companies, isLoading } = useCompanies();
 
@@ -26,6 +26,11 @@ export default function Filters() {
 
   const handleSortByChange = (value: string) => {
     setUrlFilter(value, "sortBy");
+  };
+
+  const handleLimitChange = (value: string) => {
+    if (+value <= 0) return;
+    setUrlFilter(value, "limit");
   };
 
   const handleAll = () => {
@@ -77,6 +82,8 @@ export default function Filters() {
           label="Limit"
           variant="outlined"
           type="number"
+          value={limit}
+          onChange={(e) => handleLimitChange(e.target.value)}
         />
       </>
     </Box>
