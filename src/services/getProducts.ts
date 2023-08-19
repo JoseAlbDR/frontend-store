@@ -20,15 +20,16 @@ export const getProduts = async (
     query.push(`company=${params.company}`);
   }
 
-  if (params.fields) {
-    query.push(`fields=${params.fields}`);
-  }
-
   if (params.sortBy) {
     const [value, direction] = params.sortBy.toLowerCase().split(" ");
     direction === "asc"
       ? query.push(`sort=${value === "date" ? "createdAt" : value}`)
       : query.push(`sort=${value === "date" ? "-createdAt" : value}`);
+  }
+
+  if (params.fields && params.fields !== "") {
+    const filterFields = params.fields.split(" ").join(",");
+    query.push(`fields=${filterFields}`);
   }
 
   const finalQuery = `${_.isEmpty(params) ? "" : "?"}${query.join("&")}`;
@@ -37,10 +38,9 @@ export const getProduts = async (
 
   try {
     const products = await axios.get(`${apiUrl}${finalQuery}`);
-
-    if (!products) throw new Error("Error getting products");
     return products.data;
   } catch (error) {
     console.log(error);
+    throw new Error("Error fetching products");
   }
 };
