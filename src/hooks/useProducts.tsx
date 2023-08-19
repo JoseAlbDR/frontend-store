@@ -12,7 +12,14 @@ export const useProducts = () => {
   const fields = searchParams.get("fields");
   const query: Query = {};
 
-  const allowedParams = ["name", "company", "sortBy", "fields", "featured"];
+  const allowedParams = [
+    "name",
+    "company",
+    "sortBy",
+    "fields",
+    "featured",
+    "limit",
+  ];
 
   if (featured) {
     query.featured = featured;
