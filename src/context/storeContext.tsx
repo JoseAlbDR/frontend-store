@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import {
   Action,
+  IFields,
   IState,
   IStoreContext,
   Query,
@@ -15,6 +16,13 @@ const initialState: IState = {
   name: "",
   company: "",
   sortBy: "",
+  fields: {
+    name: false,
+    price: false,
+    rating: false,
+    company: false,
+    featured: false,
+  },
 };
 
 function reducer(state: IState, action: Action): IState {
@@ -35,7 +43,15 @@ function reducer(state: IState, action: Action): IState {
         ...state,
         name: action.payload,
       };
-
+    case "fields/changed":
+      console.log(action.payload);
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          ...action.payload, // Assuming action.payload is an object with updated fields
+        },
+      };
     default:
       throw new Error("Unknown action type");
   }
@@ -43,7 +59,7 @@ function reducer(state: IState, action: Action): IState {
 
 function StoreProvider({ children }: StoreContextProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { featured, company, search, urlParams, sortBy, name } = state;
+  const { featured, company, search, urlParams, sortBy, name, fields } = state;
 
   const reset = () => {
     dispatch({ type: "products/all" });
@@ -53,12 +69,33 @@ function StoreProvider({ children }: StoreContextProviderProps) {
     dispatch({ type: "name/changed", payload: value });
   };
 
+  const updateFields = (updatedFields: IFields) => {
+    dispatch({ type: "fields/changed", payload: updatedFields });
+
+    // Construct the fieldsParam for the URL
+    const selectedFields = Object.keys(updatedFields).filter(
+      (key) => updatedFields[key]
+    );
+    const newSearch = !search ? true : search;
+    const filterName = "fields";
+    const fieldsParam = selectedFields.join(" ");
+    const newUrlParams: Query = { ...urlParams, [filterName]: fieldsParam };
+    console.log(newUrlParams);
+    // Update the URL using updateUrl
+
+    updateUrl(newSearch, filterName, fieldsParam, newUrlParams);
+  };
+
   const updateUrl = (
     search: boolean,
     filter: string,
     value: string,
     urlParams: Query
   ) => {
+    if (filter === "fields" && value === "") {
+      delete urlParams.fields;
+    }
+
     dispatch({
       type: "url/updated",
       payload: { search, [filter]: value, urlParams },
@@ -74,9 +111,11 @@ function StoreProvider({ children }: StoreContextProviderProps) {
         name,
         company,
         sortBy,
+        fields,
         reset,
         updateUrl,
         updateName,
+        updateFields,
       }}
     >
       {children}
