@@ -18,6 +18,7 @@ export interface IState {
   sortBy: string;
   search: boolean;
   fields: IFields;
+  limit: number;
 }
 
 export type IFields = {
@@ -30,6 +31,7 @@ export interface Query {
   company?: string;
   sortBy?: string;
   fields?: string;
+  limit?: string;
 }
 
 export interface StoreContextProviderProps {
@@ -43,6 +45,7 @@ export interface IStoreContext {
   name: string;
   company: string;
   sortBy: string;
+  limit: number;
   fields: IFields;
   reset: () => void;
   updateUrl: (
@@ -78,6 +81,7 @@ type UpdateUrlPayload = {
   sortBy?: string;
   urlParams: Query;
   fields?: string[];
+  limit?: number;
 };
 
 type NameChangedPayload = string;
