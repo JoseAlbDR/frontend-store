@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { useStore } from "../context/storeContext";
 import { useNavigate } from "react-router-dom";
 import { useFilter } from "../hooks/useFilter";
-import { useCompanies } from "../hooks/useCompanies";
+import { useProductsData } from "../hooks/useProductsData";
 import { CircularProgress, TextField } from "@mui/material";
 import SelectList from "./SelectList";
 import Fields from "./Fields";
@@ -11,9 +11,11 @@ import Fields from "./Fields";
 export default function Filters() {
   const navigate = useNavigate();
   const { setUrlFilter } = useFilter();
-  const { featured, company, sortBy, limit, page, reset } = useStore();
+  const { featured, company, sortBy, limit, reset } = useStore();
+  const { companies, isLoading, numProducts } = useProductsData();
 
-  const { companies, isLoading } = useCompanies();
+  if (!numProducts) return;
+  // const limitPages = Math.ceil(numProducts / limit);
 
   const handleFeatured = () => {
     const updatedFeatured = featured === "true" ? "false" : "true";
@@ -29,14 +31,14 @@ export default function Filters() {
   };
 
   const handleLimitChange = (value: string) => {
-    if (+value <= 0) return;
+    if (+value <= 0 || +value === numProducts + 1) return;
     setUrlFilter(value, "limit");
   };
 
-  const handlePageChange = (value: string) => {
-    if (+value <= 0) return;
-    setUrlFilter(value, "page");
-  };
+  // const handlePageChange = (value: string) => {
+  //   if (+value <= 0 || +value === limitPages + 1) return;
+  //   setUrlFilter(value, "page");
+  // };
 
   const handleAll = () => {
     reset();
@@ -69,37 +71,39 @@ export default function Filters() {
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <SelectList
-            data={companies}
-            value={company}
-            onChange={handleCompanyChange}
-            label={"Company"}
-          />
+          <>
+            <SelectList
+              data={companies}
+              value={company}
+              onChange={handleCompanyChange}
+              label={"Company"}
+            />
+            <SelectList
+              data={sortByList}
+              value={sortBy}
+              onChange={handleSortByChange}
+              label={"Sort By"}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Limit"
+              variant="outlined"
+              type="number"
+              value={limit}
+              onChange={(e) => handleLimitChange(e.target.value)}
+              sx={{ width: "100px" }}
+            />
+            {/* <TextField
+              id="outlined-basic"
+              label="Page"
+              variant="outlined"
+              type="number"
+              value={page}
+              onChange={(e) => handlePageChange(e.target.value)}
+              sx={{ width: "100px" }}
+            /> */}
+          </>
         )}
-        <SelectList
-          data={sortByList}
-          value={sortBy}
-          onChange={handleSortByChange}
-          label={"Sort By"}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Limit"
-          variant="outlined"
-          type="number"
-          value={limit}
-          onChange={(e) => handleLimitChange(e.target.value)}
-          sx={{ width: "100px" }}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Page"
-          variant="outlined"
-          type="number"
-          value={page}
-          onChange={(e) => handlePageChange(e.target.value)}
-          sx={{ width: "100px" }}
-        />
       </>
     </Box>
   );
