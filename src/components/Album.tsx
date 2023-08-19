@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 import { useStore } from "../context/storeContext";
 import ProductCard from "./ProductCard";
+import PaginationControlled from "./Pagination";
 
 export default function Album() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function Album() {
         ) : (
           <>
             <Typography sx={{ mb: 3 }}>Results: {data.nbHits}</Typography>
+            <PaginationControlled />
             <Grid container spacing={4}>
               {isLoading && <CircularProgress />}
               {!data.products.length && (
