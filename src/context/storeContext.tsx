@@ -10,6 +10,7 @@ import {
 
 const StoreContext = createContext({});
 const initialState: IState = {
+  limit: 10,
   urlParams: {},
   search: false,
   featured: "false",
@@ -35,6 +36,7 @@ function reducer(state: IState, action: Action): IState {
         sortBy: action.payload.sortBy || state.sortBy,
         urlParams: action.payload.urlParams || state.urlParams,
         search: action.payload.search,
+        limit: action.payload.limit || state.limit,
       };
     case "products/all":
       return initialState;
@@ -58,7 +60,8 @@ function reducer(state: IState, action: Action): IState {
 
 function StoreProvider({ children }: StoreContextProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { featured, company, search, urlParams, sortBy, name, fields } = state;
+  const { featured, company, search, urlParams, sortBy, name, fields, limit } =
+    state;
 
   const reset = () => {
     dispatch({ type: "products/all" });
@@ -108,6 +111,7 @@ function StoreProvider({ children }: StoreContextProviderProps) {
         company,
         sortBy,
         fields,
+        limit,
         reset,
         updateUrl,
         updateName,
