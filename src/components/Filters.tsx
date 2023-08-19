@@ -11,7 +11,7 @@ import Fields from "./Fields";
 export default function Filters() {
   const navigate = useNavigate();
   const { setUrlFilter } = useFilter();
-  const { featured, company, sortBy, limit, reset } = useStore();
+  const { featured, company, sortBy, limit, page, reset } = useStore();
 
   const { companies, isLoading } = useCompanies();
 
@@ -31,6 +31,11 @@ export default function Filters() {
   const handleLimitChange = (value: string) => {
     if (+value <= 0) return;
     setUrlFilter(value, "limit");
+  };
+
+  const handlePageChange = (value: string) => {
+    if (+value <= 0) return;
+    setUrlFilter(value, "page");
   };
 
   const handleAll = () => {
@@ -84,6 +89,16 @@ export default function Filters() {
           type="number"
           value={limit}
           onChange={(e) => handleLimitChange(e.target.value)}
+          sx={{ width: "100px" }}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Page"
+          variant="outlined"
+          type="number"
+          value={page}
+          onChange={(e) => handlePageChange(e.target.value)}
+          sx={{ width: "100px" }}
         />
       </>
     </Box>
