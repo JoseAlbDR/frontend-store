@@ -20,6 +20,10 @@ export const getProduts = async (
     query.push(`company=${params.company}`);
   }
 
+  if (params.limit) {
+    query.push(`limit=${params.limit}`);
+  }
+
   if (params.sortBy) {
     const [value, direction] = params.sortBy.toLowerCase().split(" ");
     direction === "asc"

@@ -10,6 +10,7 @@ export const useProducts = () => {
   const company = searchParams.get("company");
   const sortBy = searchParams.get("sortBy");
   const fields = searchParams.get("fields");
+  const limit = searchParams.get("limit");
   const query: Query = {};
 
   const allowedParams = [
@@ -39,6 +40,10 @@ export const useProducts = () => {
 
   if (fields) {
     query.fields = fields;
+  }
+
+  if (limit) {
+    query.limit = limit;
   }
 
   const { isLoading, data, isError, error } = useQuery({
