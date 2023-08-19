@@ -17,11 +17,11 @@ const initialState: IState = {
   company: "",
   sortBy: "",
   fields: {
-    name: false,
-    price: false,
-    rating: false,
-    company: false,
-    featured: false,
+    name: true,
+    price: true,
+    rating: true,
+    company: true,
+    featured: true,
   },
 };
 
@@ -44,7 +44,6 @@ function reducer(state: IState, action: Action): IState {
         name: action.payload,
       };
     case "fields/changed":
-      console.log(action.payload);
       return {
         ...state,
         fields: {
@@ -80,9 +79,6 @@ function StoreProvider({ children }: StoreContextProviderProps) {
     const filterName = "fields";
     const fieldsParam = selectedFields.join(" ");
     const newUrlParams: Query = { ...urlParams, [filterName]: fieldsParam };
-    console.log(newUrlParams);
-    // Update the URL using updateUrl
-
     updateUrl(newSearch, filterName, fieldsParam, newUrlParams);
   };
 
