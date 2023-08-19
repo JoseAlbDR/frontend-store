@@ -10,7 +10,7 @@ import ProductCard from "./ProductCard";
 
 export default function Album() {
   const navigate = useNavigate();
-  const { isLoading, data, isError } = useProducts();
+  const { isLoading, data, isError, error } = useProducts();
   const { urlParams, search } = useStore();
 
   useEffect(() => {
@@ -27,8 +27,10 @@ export default function Album() {
       <Container sx={{ py: 8, textAlign: "center" }} maxWidth="md">
         {isLoading ? (
           <CircularProgress />
-        ) : !data?.products || isError ? (
-          <Alert severity="error">Error Fetching Products</Alert>
+        ) : isError ? (
+          <Alert severity="error">{`${error}`}</Alert>
+        ) : !data?.products ? (
+          <Alert severity="error">No Products Found</Alert>
         ) : (
           <>
             <Typography sx={{ mb: 3 }}>Results: {data.nbHits}</Typography>
