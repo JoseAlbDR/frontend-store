@@ -4,7 +4,7 @@ import { useStore } from "../context/storeContext";
 import { useNavigate } from "react-router-dom";
 import { useFilter } from "../hooks/useFilter";
 import { useCompanies } from "../hooks/useCompanies";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import SelectList from "./SelectList";
 import Fields from "./Fields";
 
@@ -59,21 +59,25 @@ export default function Filters() {
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <>
-            <SelectList
-              data={companies}
-              value={company}
-              onChange={handleCompanyChange}
-              label={"Company"}
-            />
-            <SelectList
-              data={sortByList}
-              value={sortBy}
-              onChange={handleSortByChange}
-              label={"Sort By"}
-            />
-          </>
+          <SelectList
+            data={companies}
+            value={company}
+            onChange={handleCompanyChange}
+            label={"Company"}
+          />
         )}
+        <SelectList
+          data={sortByList}
+          value={sortBy}
+          onChange={handleSortByChange}
+          label={"Sort By"}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Limit"
+          variant="outlined"
+          type="number"
+        />
       </>
     </Box>
   );
