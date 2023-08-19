@@ -16,13 +16,15 @@ export default function Fields() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     const updatedFields = { ...fields, [name]: checked };
-    updateFields(updatedFields); // Update fields and URL
+    updateFields(updatedFields);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-        <FormLabel component="legend">Select Fields</FormLabel>
+        <FormLabel component="legend">
+          Select Fields (all selected by default)
+        </FormLabel>
         <FormGroup sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
           {allowedFields.map((field, index) => (
             <FormControlLabel
