@@ -21,9 +21,9 @@ export default function ProductCard({ product }: IProductProps) {
         <CardMedia
           component="div"
           sx={{ pt: "56.25%" }}
-          image={`https://source.unsplash.com/random?${product.name
-            .split(" ")
-            .at(-1)}`}
+          image={`https://source.unsplash.com/random?${
+            product?.name?.split(" ").at(-1) || "not found"
+          }`}
         />
         <CardContent
           sx={{
@@ -48,11 +48,11 @@ export default function ProductCard({ product }: IProductProps) {
               component="h2"
               style={{ marginBottom: 0, padding: "10px 0" }}
             >
-              {_.capitalize(product.name)}
+              {_.capitalize(product.name) || "Not Selected"}
             </Typography>
           </div>
           <Typography gutterBottom variant="h6" component="h3">
-            Company: {_.capitalize(product.company)}
+            Company: {_.capitalize(product.company) || "Not Selected"}
           </Typography>
           <Box
             sx={{
@@ -60,10 +60,17 @@ export default function ProductCard({ product }: IProductProps) {
               justifyContent: "space-between",
             }}
           >
-            <Typography>Price: ${product.price}</Typography>
-            <Typography>Rating: {product.rating}</Typography>
+            <Typography>Price: ${product.price || "Not Selected"}</Typography>
+            <Typography>Rating: {product.rating || "Not Selected"}</Typography>
           </Box>
-          <Typography>Featured: {product.featured ? "Yes" : "No"}</Typography>
+          <Typography>
+            Featured:{" "}
+            {product.featured === undefined
+              ? "Not selected"
+              : product.featured
+              ? "Yes"
+              : "No"}
+          </Typography>
           <Typography>ID: {product._id}</Typography>
         </CardContent>
       </Card>
