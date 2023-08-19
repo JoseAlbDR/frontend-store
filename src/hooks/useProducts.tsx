@@ -9,7 +9,10 @@ export const useProducts = () => {
   const name = searchParams.get("name");
   const company = searchParams.get("company");
   const sortBy = searchParams.get("sortBy");
+  const fields = searchParams.get("fields");
   const query: Query = {};
+
+  const allowedParams = ["name", "company", "sortBy", "fields", "featured"];
 
   if (featured) {
     query.featured = featured;
@@ -27,10 +30,24 @@ export const useProducts = () => {
     query.sortBy = sortBy;
   }
 
-  const { isLoading, data, isError } = useQuery({
-    queryKey: ["products", featured, name, company, sortBy],
-    queryFn: () => getProduts(query),
+  if (fields) {
+    query.fields = fields;
+  }
+
+  const { isLoading, data, isError, error } = useQuery({
+    queryKey: ["products", featured, name, company, sortBy, fields],
+    queryFn: () => {
+      const params = Object.fromEntries(searchParams.entries());
+      const keys = Object.keys(params);
+      keys.forEach((key) => {
+        // Check for correct params
+        if (!allowedParams.includes(key)) {
+          throw new Error(`Param: ${key} is not allowed`);
+        }
+      });
+      return getProduts(query);
+    },
   });
 
-  return { isLoading, data, isError };
+  return { isLoading, data, isError, error };
 };
