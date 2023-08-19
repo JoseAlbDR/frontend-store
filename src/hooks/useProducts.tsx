@@ -47,7 +47,7 @@ export const useProducts = () => {
   }
 
   const { isLoading, data, isError, error } = useQuery({
-    queryKey: ["products", featured, name, company, sortBy, fields],
+    queryKey: ["products", featured, name, company, sortBy, fields, limit],
     queryFn: () => {
       const params = Object.fromEntries(searchParams.entries());
       const keys = Object.keys(params);
