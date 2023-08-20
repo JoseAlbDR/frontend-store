@@ -8,14 +8,22 @@ import {
 } from "@mui/material";
 import _ from "lodash";
 import { useStore } from "../context/storeContext";
+import { useFilter } from "../hooks/useFilter";
 
 const allowedFields = ["name", "price", "featured", "rating", "company"];
 export default function Fields() {
   const { fields, updateFields } = useStore();
+  const { setUrlFilter } = useFilter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     const updatedFields = { ...fields, [name]: checked };
+
+    const selectedFields = Object.keys(updatedFields).filter(
+      (key) => updatedFields[key]
+    );
+    const fieldsParam = selectedFields.join(" ");
+    setUrlFilter(fieldsParam, "fields");
     updateFields(updatedFields);
   };
 
