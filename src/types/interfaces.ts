@@ -20,11 +20,15 @@ export interface IState {
   fields: IFields;
   limit: number;
   page: number;
-  numericFilter: string;
+  numericFilter: { price: string; rating: string };
 }
 
 export type IFields = {
   [x: string]: boolean;
+};
+
+export type INumericFilter = {
+  [x: string]: string;
 };
 
 export interface Query {
@@ -52,7 +56,7 @@ export interface IStoreContext {
   limit: number;
   page: number;
   fields: IFields;
-  numericFilter: string;
+  numericFilter: { price: string; rating: string };
   reset: () => void;
   updateUrl: (
     search: boolean,
@@ -62,7 +66,7 @@ export interface IStoreContext {
   ) => void;
   updateName: (value: string) => void;
   updateFields: (fields: IFields) => void;
-  updateNumericFilter: (value: string) => void;
+  updateNumericFilter: (value: INumericFilter) => void;
 }
 
 export interface IRangeSliderProps {
@@ -103,4 +107,4 @@ export type Action =
   | { type: "products/all" }
   | { type: "name/changed"; payload: NameChangedPayload }
   | { type: "fields/changed"; payload: IFields }
-  | { type: "numericFilter/changed"; payload: string };
+  | { type: "numericFilter/changed"; payload: INumericFilter };
