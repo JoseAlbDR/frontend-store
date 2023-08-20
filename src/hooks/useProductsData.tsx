@@ -11,6 +11,8 @@ export const useProductsData = () => {
 
   const companies = _.uniq(data?.products.map((product) => product.company));
   const numProducts = data?.products.length;
+  const maxPrice = _.max(data?.products.map((product) => product.price));
+  const minPrice = _.min(data?.products.map((product) => product.price));
   companies.unshift("all");
-  return { isLoading, companies, numProducts, isError };
+  return { isLoading, companies, numProducts, isError, maxPrice, minPrice };
 };
