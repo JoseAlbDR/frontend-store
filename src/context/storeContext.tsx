@@ -25,7 +25,7 @@ const initialState: IState = {
     company: true,
     featured: true,
   },
-  numericFilter: "",
+  numericFilter: { price: "", rating: "" },
 };
 
 function reducer(state: IState, action: Action): IState {
@@ -59,7 +59,10 @@ function reducer(state: IState, action: Action): IState {
     case "numericFilter/changed":
       return {
         ...state,
-        numericFilter: state.numericFilter + action.payload,
+        numericFilter: {
+          ...state.numericFilter,
+          ...action.payload,
+        },
       };
     default:
       throw new Error("Unknown action type");
@@ -93,13 +96,8 @@ function StoreProvider({ children }: StoreContextProviderProps) {
     dispatch({ type: "fields/changed", payload: updatedFields });
   };
 
-  const updateNumericFilter = (value: string) => {
-    value = value.includes("price") && !value.includes("rating") ? value : "";
+  const updateNumericFilter = (value: { [x: string]: string }) => {
     dispatch({ type: "numericFilter/changed", payload: value });
-    const newSearch = !search ? true : search;
-    const filterName = "numericFilter";
-    const newUrlParams: Query = { ...urlParams, [filterName]: value };
-    updateUrl(newSearch, filterName, value, newUrlParams);
   };
 
   const updateUrl = (
