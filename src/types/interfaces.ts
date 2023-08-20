@@ -20,7 +20,7 @@ export interface IState {
   fields: IFields;
   limit: number;
   page: number;
-  priceRange: number[];
+  numericFilter: string;
 }
 
 export type IFields = {
@@ -52,7 +52,7 @@ export interface IStoreContext {
   limit: number;
   page: number;
   fields: IFields;
-  priceRange: number[];
+  numericFilter: string;
   reset: () => void;
   updateUrl: (
     search: boolean,
@@ -62,7 +62,11 @@ export interface IStoreContext {
   ) => void;
   updateName: (value: string) => void;
   updateFields: (fields: IFields) => void;
-  updatePriceRange: (value: number[]) => void;
+  updateNumericFilter: (value: string) => void;
+}
+
+export interface IRangeSliderProps {
+  type: string;
 }
 
 export interface IProductProps {
@@ -99,4 +103,4 @@ export type Action =
   | { type: "products/all" }
   | { type: "name/changed"; payload: NameChangedPayload }
   | { type: "fields/changed"; payload: IFields }
-  | { type: "priceRange/changed"; payload: number[] };
+  | { type: "numericFilter/changed"; payload: string };
