@@ -12,6 +12,7 @@ export const useProducts = () => {
   const fields = searchParams.get("fields");
   const limit = searchParams.get("limit");
   const page = searchParams.get("page");
+  const numericFilter = searchParams.get("numericFilter");
   const query: Query = {};
 
   const allowedParams = [
@@ -22,6 +23,7 @@ export const useProducts = () => {
     "featured",
     "limit",
     "page",
+    "numericFilter",
   ];
 
   if (featured) {
@@ -52,6 +54,9 @@ export const useProducts = () => {
     query.page = page;
   }
 
+  if (numericFilter) {
+    query.numericFilter = numericFilter;
+  }
   const { isLoading, data, isError, error } = useQuery({
     queryKey: [
       "products",
@@ -62,6 +67,7 @@ export const useProducts = () => {
       fields,
       limit,
       page,
+      numericFilter,
     ],
     queryFn: () => {
       const params = Object.fromEntries(searchParams.entries());
