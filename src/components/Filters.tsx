@@ -36,11 +36,6 @@ export default function Filters() {
     setUrlFilter(value, "limit");
   };
 
-  // const handlePageChange = (value: string) => {
-  //   if (+value <= 0 || +value === limitPages + 1) return;
-  //   setUrlFilter(value, "page");
-  // };
-
   const handleAll = () => {
     reset();
     navigate("/");
@@ -94,16 +89,8 @@ export default function Filters() {
               onChange={(e) => handleLimitChange(e.target.value)}
               sx={{ width: "100px" }}
             />
-            <RangeSlider />
-            {/* <TextField
-              id="outlined-basic"
-              label="Page"
-              variant="outlined"
-              type="number"
-              value={page}
-              onChange={(e) => handlePageChange(e.target.value)}
-              sx={{ width: "100px" }}
-            /> */}
+            <RangeSlider type={"price"} />
+            <RangeSlider type={"rating"} />
           </>
         )}
       </>
