@@ -40,6 +40,12 @@ export const getProduts = async (
     query.push(`fields=${filterFields}`);
   }
 
+  if (params.numericFilter) {
+    const newNumericFilter = params.numericFilter.split(" ").join(",");
+    console.log(newNumericFilter);
+    query.push(`numericFilters=${newNumericFilter}`);
+  }
+
   const finalQuery = `${_.isEmpty(params) ? "" : "?"}${query.join("&")}`;
 
   console.log(finalQuery);
