@@ -64,6 +64,7 @@ export default function NumericFilters({ type }: IRangeSliderProps) {
         step={type === "price" ? 1 : 0.1}
         onChange={handleChange}
         valueLabelDisplay="on"
+        sx={{ marginLeft: 1 }}
       />
     </Box>
   );
