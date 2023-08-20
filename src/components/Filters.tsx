@@ -58,6 +58,7 @@ export default function Filters() {
         alignItems: "center",
         justifyContent: "center",
         flexWrap: "wrap",
+        gap: "15px",
       }}
     >
       <>
