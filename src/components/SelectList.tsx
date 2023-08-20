@@ -4,14 +4,14 @@ import _ from "lodash";
 
 export default function SortBy({ data, value, onChange, label }: ISelectProps) {
   return (
-    <FormControl sx={{ width: "200px" }}>
+    <FormControl sx={{ width: "130px" }}>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={value}
         label={label}
-        sx={{ width: "130px" }}
+        sx={{ width: "100%" }}
         onChange={(e) => onChange(e.target.value)}
       >
         {data.map((item: string, index: number) => (
