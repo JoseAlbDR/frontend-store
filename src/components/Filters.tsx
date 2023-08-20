@@ -7,7 +7,7 @@ import { useProductsData } from "../hooks/useProductsData";
 import { CircularProgress, TextField } from "@mui/material";
 import SelectList from "./SelectList";
 import Fields from "./Fields";
-import RangeSlider from "./RangeSlider";
+import NumericFilters from "./NumericFilters";
 
 export default function Filters() {
   const navigate = useNavigate();
@@ -90,8 +90,8 @@ export default function Filters() {
               onChange={(e) => handleLimitChange(e.target.value)}
               sx={{ width: "100px" }}
             />
-            <RangeSlider type={"price"} />
-            <RangeSlider type={"rating"} />
+            <NumericFilters type={"price"} />
+            <NumericFilters type={"rating"} />
           </>
         )}
       </>
