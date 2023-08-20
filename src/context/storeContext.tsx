@@ -25,6 +25,7 @@ const initialState: IState = {
     company: true,
     featured: true,
   },
+  priceRange: [0, 500],
 };
 
 function reducer(state: IState, action: Action): IState {
@@ -55,6 +56,11 @@ function reducer(state: IState, action: Action): IState {
           ...action.payload, // Assuming action.payload is an object with updated fields
         },
       };
+    case "priceRange/changed":
+      return {
+        ...state,
+        priceRange: action.payload,
+      };
     default:
       throw new Error("Unknown action type");
   }
@@ -72,6 +78,7 @@ function StoreProvider({ children }: StoreContextProviderProps) {
     fields,
     limit,
     page,
+    priceRange,
   } = state;
 
   const reset = () => {
@@ -94,6 +101,19 @@ function StoreProvider({ children }: StoreContextProviderProps) {
     const fieldsParam = selectedFields.join(" ");
     const newUrlParams: Query = { ...urlParams, [filterName]: fieldsParam };
     updateUrl(newSearch, filterName, fieldsParam, newUrlParams);
+  };
+
+  const updatePriceRange = (priceRange: number[]) => {
+    dispatch({ type: "priceRange/changed", payload: priceRange });
+
+    console.log(priceRange);
+    const newSearch = !search ? true : search;
+    const filterName = "numericFilter";
+    const fieldsParam = `price>%3D${priceRange[0]} price<%3D${priceRange[1]}`;
+    console.log(fieldsParam);
+    const newUrlParams: Query = { ...urlParams, [filterName]: fieldsParam };
+    updateUrl(newSearch, filterName, fieldsParam, newUrlParams);
+    console.log(urlParams);
   };
 
   const updateUrl = (
@@ -128,10 +148,12 @@ function StoreProvider({ children }: StoreContextProviderProps) {
         fields,
         limit,
         page,
+        priceRange,
         reset,
         updateUrl,
         updateName,
         updateFields,
+        updatePriceRange,
       }}
     >
       {children}
