@@ -12,7 +12,7 @@ export const useProducts = () => {
   const fields = searchParams.get("fields");
   const limit = searchParams.get("limit");
   const page = searchParams.get("page");
-  const numericFilter = searchParams.get("numericFilter");
+  const numericFilter = searchParams.get("numericFilters");
   const query: Query = {};
 
   const allowedParams = [
@@ -23,7 +23,7 @@ export const useProducts = () => {
     "featured",
     "limit",
     "page",
-    "numericFilter",
+    "numericFilters",
   ];
 
   if (featured) {
@@ -75,7 +75,7 @@ export const useProducts = () => {
       keys.forEach((key) => {
         // Check for correct params
         if (!allowedParams.includes(key)) {
-          throw new Error(`Param: ${key} is not allowed`);
+          throw new Error(`Param ${key} is not allowed`);
         }
       });
       return getProduts(query);
