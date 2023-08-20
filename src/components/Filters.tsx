@@ -63,7 +63,12 @@ export default function Filters() {
     >
       <>
         <Button onClick={handleAll}>All</Button>
-        <Button onClick={handleFeatured}>Featured</Button>
+        <Button
+          sx={{ color: featured === "true" ? "green" : "red" }}
+          onClick={handleFeatured}
+        >
+          Featured
+        </Button>
         <Fields />
         {isLoading ? (
           <CircularProgress />
