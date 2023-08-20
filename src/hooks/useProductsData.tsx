@@ -13,6 +13,17 @@ export const useProductsData = () => {
   const numProducts = data?.products.length;
   const maxPrice = _.max(data?.products.map((product) => product.price));
   const minPrice = _.min(data?.products.map((product) => product.price));
+  const maxRating = _.max(data?.products.map((product) => product.rating));
+  const minRating = _.min(data?.products.map((product) => product.rating));
   companies.unshift("all");
-  return { isLoading, companies, numProducts, isError, maxPrice, minPrice };
+  return {
+    isLoading,
+    companies,
+    numProducts,
+    isError,
+    maxPrice,
+    minPrice,
+    maxRating,
+    minRating,
+  };
 };
