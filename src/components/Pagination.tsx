@@ -25,7 +25,7 @@ export default function PaginationControlled() {
 
   return (
     <Stack spacing={2} mb={5} zIndex={-100}>
-      <Typography>Page: {page}</Typography>
+      <Typography>Page: {page}</Typography>{" "}
       <Pagination
         count={+limitPages}
         page={+page}
