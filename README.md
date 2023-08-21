@@ -24,7 +24,6 @@ The Store App allows users to explore a wide range of products, filter and sort 
 - Browse and search for products from different companies.
 - Filter products based on name, company, price, and rating.
 - Sort products by different criteria such as name, price, and rating.
-- Responsive design for a seamless experience on both desktop and mobile devices.
 
 ## Installation
 
@@ -51,7 +50,6 @@ app.use(
   })
 );
 ```
-
 
 ## API
 
