@@ -1,27 +1,73 @@
-# React + TypeScript + Vite
+# Store App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Currently, two official plugins are available:
+Welcome to the Store App project! This project provides a web application for browsing and searching through a collection of products from various companies.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API](#api)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Introduction
 
-- Configure the top-level `parserOptions` property like this:
+The Store App allows users to explore a wide range of products, filter and sort them, and perform searches based on various criteria. The application offers an intuitive user interface for an enhanced shopping experience.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Features
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Browse and search for products from different companies.
+- Filter products based on name, company, price, and rating.
+- Sort products by different criteria such as name, price, and rating.
+- Responsive design for a seamless experience on both desktop and mobile devices.
+
+## Installation
+
+1. Clone the repository.
+2. Navigate to the project's root directory.
+3. Run `npm install` to install the required dependencies.
+
+## Usage
+
+1. Start the development server by running `npm start`.
+2. Open your web browser and navigate to `http://localhost:3000` to access the application.
+3. Use the provided filters, sorting options, and search functionality to explore the products.
+
+## API
+
+The Store App uses the following APIs and modules:
+
+- `useProducts`: A custom hook that fetches and manages product data.
+- `useCompanies`: A hook that retrieves a list of companies for filtering.
+- `useFilter`: A hook to update URL filters based on user interactions.
+- `useProductsData`: A hook to fetch additional data for filters and range sliders.
+- `getProducts`: A service function to fetch products from the API.
+
+Refer to the source code for more detailed documentation of these components.
+
+## Technologies Used
+
+- React: A JavaScript library for building user interfaces.
+- React Query: A data-fetching library for managing remote data.
+- React Router: A library for routing and navigation in React applications.
+- Axios: A promise-based HTTP client for making API requests.
+- Lodash: A utility library for working with arrays, objects, and more.
+
+## Contributing
+
+Contributions are welcome! To contribute, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature-name`.
+3. Commit your changes: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature/your-feature-name`.
+5. Create a pull request.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
