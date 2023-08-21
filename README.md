@@ -34,9 +34,24 @@ The Store App allows users to explore a wide range of products, filter and sort 
 
 ## Usage
 
-1. Start the development server by running `npm start`.
-2. Open your web browser and navigate to `http://localhost:3000` to access the application.
+1. Start the development server by running `npm run dev`.
+2. Open your web browser and navigate to `http://localhost:5173` to access the application.
 3. Use the provided filters, sorting options, and search functionality to explore the products.
+4. REMEMBER to change your API URL in file config.ts to point your API endpoint like
+```
+export const STORE_API_URL: string = "http://127.0.0.1:3000/api/v1/products";
+```
+5. You have to add cors to your api to allow request from the Front End:
+```
+npm i cors
+// In your server file import/require cors
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:3000"], // or "*" if you want to allow request from all sources
+  })
+);
+```
+
 
 ## API
 
