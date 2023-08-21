@@ -19,6 +19,26 @@ Welcome to the Store App project! This project provides a web application for br
 
 The Store App allows users to explore a wide range of products, filter and sort them, and perform searches based on various criteria. The application offers an intuitive user interface for an enhanced shopping experience.
 
+## Directory Structure
+
+The project follows a structured organization for better code management. Below is the directory structure:
+
+- `src/`: Contains the main source code.
+  - `components/`: React components used in the application.
+  - `context/`: Contains the context and reducer for state management.
+  - `hooks/`: Custom hooks for data fetching and filtering.
+  - `services/`: Service functions for API calls.
+  - `types/`: TypeScript type interfaces.
+  - `App.js`: The main application component.
+  - `config.js`: Configuration file for API URL.
+  - `main.js`: Entry point of the application.
+- `package.json`: Dependency and script configuration.
+- `README.md`: This file, containing project documentation.
+- ...
+
+Adjust the file and folder names based on your actual project structure.
+
+
 ## Features
 
 - Browse and search for products from different companies.
