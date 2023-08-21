@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Welcome to the Store App project! This project provides a web application for browsing and searching through a collection of products from various companies.
+Welcome to the Store App project! This project provides a web application for browsing and searching through a collection of products from various companies consuming Store API from [Node Course](https://www.udemy.com/course/nodejs-tutorial-and-projects-course/learn/lecture/27096960)
 
 ## Table of Contents
 
