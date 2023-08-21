@@ -36,9 +36,6 @@ The project follows a structured organization for better code management. Below 
 - `README.md`: This file, containing project documentation.
 - ...
 
-Adjust the file and folder names based on your actual project structure.
-
-
 ## Features
 
 - Browse and search for products from different companies.
