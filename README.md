@@ -13,7 +13,6 @@ Welcome to the Store App project! This project provides a web application for br
 - [API](#api)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -98,6 +97,3 @@ Contributions are welcome! To contribute, follow these steps:
 4. Push to the branch: `git push origin feature/your-feature-name`.
 5. Create a pull request.
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
