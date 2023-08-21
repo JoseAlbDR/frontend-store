@@ -32,7 +32,7 @@ export const getProduts = async (
     const [value, direction] = params.sortBy.toLowerCase().split(" ");
     direction === "asc"
       ? query.push(`sort=${value === "date" ? "createdAt" : value}`)
-      : query.push(`sort=${value === "date" ? "-createdAt" : value}`);
+      : query.push(`sort=${value === "date" ? "-createdAt" : `-${value}`}`);
   }
 
   if (params.fields && params.fields !== "") {
